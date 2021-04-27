@@ -1,0 +1,58 @@
+﻿@page "/"
+@using BlazorAntiforgery.Shared
+
+<EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText id="name" @bind-Value="model.Value" />
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+Result: @response
+
+@code{
+	[Inject] private IHttpClientFactory httpClientFactor { get; set; }
+	[Inject] private IJSRuntime jSRuntime { get;set; }
+
+	private Model model = new Model() { Value = "test" };
+	private string response { get; set; }
+
+	private async Task HandleValidSubmit()
+	{
+		using var client = httpClientFactor.CreateClient();
+
+		var token = await GetToken();
+		client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", token);
+
+		var resp = await client.PostAsJsonAsync<Model>("/api/AntiForgeryTest", model);
+
+		if (resp.IsSuccessStatusCode)
+		{
+			response = "Success: " + await resp.Content.ReadAsStringAsync();
+		}
+		else
+		{
+			response = "Fail: " + await resp.Content.ReadAsStringAsync();
+		}
+
+		StateHasChanged();
+	}
+
+	private async Task<string> GetToken()
+	{
+		var header = "X-CSRF-TOKEN";
+
+		var cookies = await jSRuntime.InvokeAsync<string>("blazorAntiForgery.getCookie");
+
+		var cookie = cookies.Split(';')
+							.Where(x => x.StartsWith(header + "="))
+							.First()
+							.Substring((header + "=").Length);
+		
+		cookie = System.Web.HttpUtility.HtmlDecode(cookie);
+
+		return cookie;
+	}
+}
