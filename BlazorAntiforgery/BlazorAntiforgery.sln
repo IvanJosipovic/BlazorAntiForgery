@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31220.234
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorAntiforgery.Server", "Server\BlazorAntiforgery.Server.csproj", "{F5BA4996-3544-4788-AA32-24C326007BE3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorAntiForgery.Server", "Server\BlazorAntiForgery.Server.csproj", "{F5BA4996-3544-4788-AA32-24C326007BE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorAntiforgery.Client", "Client\BlazorAntiforgery.Client.csproj", "{7457685F-5475-4E44-81AB-33C732FD4946}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorAntiForgery.Client", "Client\BlazorAntiForgery.Client.csproj", "{7457685F-5475-4E44-81AB-33C732FD4946}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorAntiforgery.Shared", "Shared\BlazorAntiforgery.Shared.csproj", "{0689F5AC-C98F-4929-9A39-7D6F563A02E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorAntiForgery.Shared", "Shared\BlazorAntiForgery.Shared.csproj", "{0689F5AC-C98F-4929-9A39-7D6F563A02E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

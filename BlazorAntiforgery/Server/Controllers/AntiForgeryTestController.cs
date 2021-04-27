@@ -1,21 +1,13 @@
-﻿using BlazorAntiforgery.Shared;
+﻿using BlazorAntiForgery.Shared;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
-namespace BlazorAntiforgery.Server.Controllers
+namespace BlazorAntiForgery.Server.Controllers
 {
     [ApiController]
     [AutoValidateAntiforgeryToken]
     [Route("api/[controller]")]
     public class AntiForgeryTestController : ControllerBase
     {
-        private readonly ILogger<AntiForgeryTestController> logger;
-
-        public AntiForgeryTestController(ILogger<AntiForgeryTestController> logger)
-        {
-            this.logger = logger;
-        }
-
         [HttpPost]
         public IActionResult Post(Model model)
         {

@@ -1,7 +1,6 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace BlazorAntiforgery.Shared
+namespace BlazorAntiForgery.Shared
 {
     public class Model
     {

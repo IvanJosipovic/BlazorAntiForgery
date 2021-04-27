@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\BlazorAntiforgery.Shared.csproj" />
+    <ProjectReference Include="..\Shared\BlazorAntiForgery.Shared.csproj" />
   </ItemGroup>
 
 </Project>

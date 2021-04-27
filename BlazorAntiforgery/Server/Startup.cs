@@ -2,15 +2,12 @@ using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Linq;
 
-namespace BlazorAntiforgery.Server
+namespace BlazorAntiForgery.Server
 {
     public class Startup
     {
@@ -28,12 +25,9 @@ namespace BlazorAntiforgery.Server
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddAntiforgery(options => {
-                //options.Cookie.Name = "X-CSRF-TOKEN";
-                //options.Cookie.HttpOnly = false;
-                options.HeaderName = "x-csrf-token";
-                //options.HeaderName = null;
-                //options.FormFieldName = null;
+            services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "X-CSRF-TOKEN";
             });
         }
 
@@ -57,7 +51,7 @@ namespace BlazorAntiforgery.Server
                 if (string.Equals(context.Request.Path.Value, "/", StringComparison.OrdinalIgnoreCase) || string.Equals(context.Request.Path.Value, "/index.html", StringComparison.OrdinalIgnoreCase))
                 {
                     var tokens = app.ApplicationServices.GetRequiredService<IAntiforgery>().GetAndStoreTokens(context);
-                    context.Response.Cookies.Append("X-CSRF-TOKEN", tokens.RequestToken, new CookieOptions() { HttpOnly = false, Secure = true });
+                    context.Response.Cookies.Append(tokens.HeaderName, tokens.RequestToken, new CookieOptions() { HttpOnly = false, Secure = true, SameSite = SameSiteMode.Strict });
                 }
 
                 return next(context);

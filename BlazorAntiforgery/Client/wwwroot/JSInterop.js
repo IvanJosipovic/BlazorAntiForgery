@@ -1,5 +1,5 @@
 ﻿window.blazorAntiForgery = {
-    getCookie: function () {
+    getCookies: function () {
         return document.cookie;
     },
 };

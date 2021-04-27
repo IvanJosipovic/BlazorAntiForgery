@@ -9,8 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Client\BlazorAntiforgery.Client.csproj" />
-    <ProjectReference Include="..\Shared\BlazorAntiforgery.Shared.csproj" />
+    <ProjectReference Include="..\Client\BlazorAntiForgery.Client.csproj" />
+    <ProjectReference Include="..\Shared\BlazorAntiForgery.Shared.csproj" />
   </ItemGroup>
 
 

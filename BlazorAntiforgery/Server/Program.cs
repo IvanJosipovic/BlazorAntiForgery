@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlazorAntiforgery.Server
+namespace BlazorAntiForgery.Server
 {
     public class Program
     {

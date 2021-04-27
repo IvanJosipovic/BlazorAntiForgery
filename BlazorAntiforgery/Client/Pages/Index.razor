@@ -1,5 +1,5 @@
 ﻿@page "/"
-@using BlazorAntiforgery.Shared
+@using BlazorAntiForgery.Shared
 
 <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
@@ -23,9 +23,6 @@ Result: @response
 	{
 		using var client = httpClientFactor.CreateClient();
 
-		var token = await GetToken();
-		client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", token);
-
 		var resp = await client.PostAsJsonAsync<Model>("/api/AntiForgeryTest", model);
 
 		if (resp.IsSuccessStatusCode)
@@ -38,21 +35,5 @@ Result: @response
 		}
 
 		StateHasChanged();
-	}
-
-	private async Task<string> GetToken()
-	{
-		var header = "X-CSRF-TOKEN";
-
-		var cookies = await jSRuntime.InvokeAsync<string>("blazorAntiForgery.getCookie");
-
-		var cookie = cookies.Split(';')
-							.Where(x => x.StartsWith(header + "="))
-							.First()
-							.Substring((header + "=").Length);
-		
-		cookie = System.Web.HttpUtility.HtmlDecode(cookie);
-
-		return cookie;
 	}
 }
