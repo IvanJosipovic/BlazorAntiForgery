@@ -1,7 +1,6 @@
 ﻿using BlazorAntiForgery;
 using Microsoft.JSInterop;
-using System;
-using System.Collections.Generic;
+
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class BlazorAntiForgery
@@ -23,7 +22,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="builder"></param>
         public static IHttpClientBuilder AddBlazorAntiForgery(this IHttpClientBuilder builder)
         {
-            return builder.AddHttpMessageHandler((s) => s.GetService<BlazorAntiForgeryDelegatingHandler>());
+            return builder.AddHttpMessageHandler(s => s.GetService<BlazorAntiForgeryDelegatingHandler>());
         }
     }
 }
