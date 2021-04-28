@@ -16,7 +16,7 @@ Anti Cross-Site Request Forgery (CSRF) for Blazor web applications
     builder.Services.AddBlazorAntiForgeryServices();
 
     builder.Services.AddHttpClient("AntiForgery", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
-                .AddBlazorAntiForgery();
+                    .AddBlazorAntiForgery();
     ```
 
 - Add JS Interop to the bottom of body in index.html
@@ -40,16 +40,16 @@ Anti Cross-Site Request Forgery (CSRF) for Blazor web applications
   - Note, this configuration assumes that Blazor is hosted by ASP.Net. The paths will need to be adjusted if Blazor is hosted separately.
 
   ```csharp
-    app.Use(next => context =>
-    {
-      if (context.Request.Path.Value.StartsWith("/_framework/blazor.webassembly.js", StringComparison.OrdinalIgnoreCase))
+  app.Use(next => context =>
+  {
+      if (context.Request.Path.Value.Equals("/_framework/blazor.webassembly.js", StringComparison.OrdinalIgnoreCase))
       {
           var tokens = app.ApplicationServices.GetRequiredService<IAntiforgery>().GetAndStoreTokens(context);
           context.Response.Cookies.Append(tokens.HeaderName, tokens.RequestToken, new CookieOptions() { HttpOnly = false, Secure = true, SameSite = SameSiteMode.Strict });
       }
 
       return next(context);
-    });
+  });
   ```
 
 ## Usage

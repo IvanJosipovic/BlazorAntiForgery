@@ -48,7 +48,7 @@ namespace BlazorAntiForgery.Server
 
             app.Use(next => context =>
             {
-                if (context.Request.Path.Value.StartsWith("/_framework/blazor.webassembly.js", StringComparison.OrdinalIgnoreCase))
+                if (context.Request.Path.Value.Equals("/_framework/blazor.webassembly.js", StringComparison.OrdinalIgnoreCase))
                 {
                     var tokens = app.ApplicationServices.GetRequiredService<IAntiforgery>().GetAndStoreTokens(context);
                     context.Response.Cookies.Append(tokens.HeaderName, tokens.RequestToken, new CookieOptions() { HttpOnly = false, Secure = true, SameSite = SameSiteMode.Strict });
