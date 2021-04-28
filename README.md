@@ -42,13 +42,13 @@ Anti Cross-Site Request Forgery (CSRF) for Blazor web applications
   ```csharp
     app.Use(next => context =>
     {
-    if (string.Equals(context.Request.Path.Value, "/") || string.Equals(context.Request.Path.Value, "/index.html", StringComparison.OrdinalIgnoreCase))
-    {
-        var tokens = app.ApplicationServices.GetRequiredService<IAntiforgery>().GetAndStoreTokens(context);
-        context.Response.Cookies.Append(tokens.HeaderName, tokens.RequestToken, new CookieOptions() { HttpOnly = false, Secure = true, SameSite = SameSiteMode.Strict });
-    }
+      if (context.Request.Path.Value.StartsWith("/_framework/blazor.webassembly.js", StringComparison.OrdinalIgnoreCase))
+      {
+          var tokens = app.ApplicationServices.GetRequiredService<IAntiforgery>().GetAndStoreTokens(context);
+          context.Response.Cookies.Append(tokens.HeaderName, tokens.RequestToken, new CookieOptions() { HttpOnly = false, Secure = true, SameSite = SameSiteMode.Strict });
+      }
 
-    return next(context);
+      return next(context);
     });
   ```
 
