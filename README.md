@@ -66,13 +66,13 @@ Anti Cross-Site Request Forgery (CSRF) for Blazor web applications
         <button type="submit">Submit</button>
     </EditForm>
 
-    Result: @response
+    Success: @response
 
     @code{
         [Inject] private IHttpClientFactory httpClientFactory { get; set; }
 
         private Model model = new Model() { Value = "test" };
-        private string response { get; set; }
+        private bool? response;
 
         private async Task HandleValidSubmit()
         {
@@ -80,14 +80,7 @@ Anti Cross-Site Request Forgery (CSRF) for Blazor web applications
 
             var resp = await client.PostAsJsonAsync<Model>("/api/AntiForgeryTest", model);
 
-            if (resp.IsSuccessStatusCode)
-            {
-                response = "Success: " + await resp.Content.ReadAsStringAsync();
-            }
-            else
-            {
-                response = "Fail: " + await resp.Content.ReadAsStringAsync();
-            }
+            response = resp.IsSuccessStatusCode;
 
             StateHasChanged();
         }

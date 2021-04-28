@@ -1,9 +1,6 @@
 ﻿@page "/"
 
 <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
     <InputText id="name" @bind-Value="model.Value" />
 
     <button type="submit">Submit</button>
@@ -15,7 +12,7 @@ Success: @response
 	[Inject] private IHttpClientFactory httpClientFactory { get; set; }
 
 	private Model model = new Model() { Value = "test" };
-	private string response { get; set; }
+	private bool? response;
 
 	private async Task HandleValidSubmit()
 	{
@@ -23,7 +20,7 @@ Success: @response
 
 		var resp = await client.PostAsJsonAsync<Model>("/api/AntiForgeryTest", model);
 
-		response = resp.IsSuccessStatusCode.ToString();
+		response = resp.IsSuccessStatusCode;
 
 		StateHasChanged();
 	}
