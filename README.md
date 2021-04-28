@@ -37,20 +37,20 @@ Anti Cross-Site Request Forgery (CSRF) for Blazor web applications
     ```
 
 - Add to Configure in Startup.cs
-  - Note, this configuration assumes that Blazor is hosted by ASP.Net. It will need to be adjusted if Blazor is hosted separately.
+  - Note, this configuration assumes that Blazor is hosted by ASP.Net. The paths will need to be adjusted if Blazor is hosted separately.
 
-    ```csharp
+  ```csharp
     app.Use(next => context =>
     {
-        if (string.Equals(context.Request.Path.Value, "/") || string.Equals(context.Request.Path.Value, "/index.html", StringComparison.OrdinalIgnoreCase))
-        {
-            var tokens = app.ApplicationServices.GetRequiredService<IAntiforgery>().GetAndStoreTokens(context);
-            context.Response.Cookies.Append(tokens.HeaderName, tokens.RequestToken, new CookieOptions() { HttpOnly = false, Secure = true, SameSite = SameSiteMode.Strict });
-        }
+    if (string.Equals(context.Request.Path.Value, "/") || string.Equals(context.Request.Path.Value, "/index.html", StringComparison.OrdinalIgnoreCase))
+    {
+        var tokens = app.ApplicationServices.GetRequiredService<IAntiforgery>().GetAndStoreTokens(context);
+        context.Response.Cookies.Append(tokens.HeaderName, tokens.RequestToken, new CookieOptions() { HttpOnly = false, Secure = true, SameSite = SameSiteMode.Strict });
+    }
 
-        return next(context);
+    return next(context);
     });
-    ```
+  ```
 
 ## Usage
 
@@ -61,9 +61,6 @@ Anti Cross-Site Request Forgery (CSRF) for Blazor web applications
     @page "/"
 
     <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-
         <InputText id="name" @bind-Value="model.Value" />
 
         <button type="submit">Submit</button>

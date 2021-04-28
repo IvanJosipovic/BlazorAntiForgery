@@ -9,7 +9,7 @@
     <button type="submit">Submit</button>
 </EditForm>
 
-Result: @response
+Success: @response
 
 @code{
 	[Inject] private IHttpClientFactory httpClientFactory { get; set; }
@@ -23,14 +23,7 @@ Result: @response
 
 		var resp = await client.PostAsJsonAsync<Model>("/api/AntiForgeryTest", model);
 
-		if (resp.IsSuccessStatusCode)
-		{
-			response = "Success: " + await resp.Content.ReadAsStringAsync();
-		}
-		else
-		{
-			response = "Fail: " + await resp.Content.ReadAsStringAsync();
-		}
+		response = resp.IsSuccessStatusCode.ToString();
 
 		StateHasChanged();
 	}
