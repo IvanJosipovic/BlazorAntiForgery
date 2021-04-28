@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RazorLangVersion>3.0</RazorLangVersion>
+    <IsPackable>true</IsPackable>
+    <Title>BlazorAntiForgery</Title>
+    <PackageId>BlazorAntiForgery</PackageId>
+    <Description>Anti Cross-Site Request Forgery (CSRF) for Blazor web applications</Description>
+    <Authors>Ivan Josipovic</Authors>
+    <PackageTags>Blazor;Anti Forgery;Anti;Forgery;CSRF</PackageTags>
+    <RepositoryUrl>https://github.com/IvanJosipovic/BlazorAntiForgery</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.14" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.14" />
+  </ItemGroup>
+
+</Project>

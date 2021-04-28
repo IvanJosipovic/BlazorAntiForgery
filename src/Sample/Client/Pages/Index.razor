@@ -1,0 +1,27 @@
+﻿@page "/"
+
+<EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
+    <InputText id="name" @bind-Value="model.Value" />
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+Success: @response
+
+@code{
+	[Inject] private IHttpClientFactory httpClientFactory { get; set; }
+
+	private Model model = new Model() { Value = "test" };
+	private bool? response;
+
+	private async Task HandleValidSubmit()
+	{
+		using var client = httpClientFactory.CreateClient("AntiForgery");
+
+		var resp = await client.PostAsJsonAsync<Model>("/api/AntiForgeryTest", model);
+
+		response = resp.IsSuccessStatusCode;
+
+		StateHasChanged();
+	}
+}
