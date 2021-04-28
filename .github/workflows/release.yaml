@@ -1,0 +1,38 @@
+on: 
+  push:
+    branches: 
+      - master
+      - beta
+
+name: Create Release
+jobs:
+  build:
+    name: Create Release
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.x
+
+    - name: Semantic Release
+      uses: cycjimmy/semantic-release-action@v2
+      id: semantic
+      with:
+        semantic_version: 17.3
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Dotnet Pack 
+      if: steps.semantic.outputs.new_release_published == 'true'
+      working-directory: src/BlazorAntiForgery
+      run: dotnet pack -c Release -p:Version=${{ steps.semantic.outputs.new_release_version }}
+
+    - name: Dotnet Nuget Push
+      if: steps.semantic.outputs.new_release_published == 'true'
+      working-directory: src/BlazorAntiForgery/bin/Release
+      run: dotnet nuget push BlazorAntiForgery.*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}

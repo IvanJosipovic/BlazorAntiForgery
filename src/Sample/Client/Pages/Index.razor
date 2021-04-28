@@ -1,5 +1,4 @@
 ﻿@page "/"
-@using BlazorAntiForgery.Shared
 
 <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
@@ -13,15 +12,14 @@
 Result: @response
 
 @code{
-	[Inject] private IHttpClientFactory httpClientFactor { get; set; }
-	[Inject] private IJSRuntime jSRuntime { get;set; }
+	[Inject] private IHttpClientFactory httpClientFactory { get; set; }
 
 	private Model model = new Model() { Value = "test" };
 	private string response { get; set; }
 
 	private async Task HandleValidSubmit()
 	{
-		using var client = httpClientFactor.CreateClient();
+		using var client = httpClientFactory.CreateClient("AntiForgery");
 
 		var resp = await client.PostAsJsonAsync<Model>("/api/AntiForgeryTest", model);
 

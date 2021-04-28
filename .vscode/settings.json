@@ -1,0 +1,7 @@
+{
+  "files.exclude": {
+    ".vs": true,
+    "src\\**\\bin": true,
+    "src\\**\\obj": true
+  }
+}
