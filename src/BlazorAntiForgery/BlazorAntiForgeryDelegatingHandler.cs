@@ -1,4 +1,5 @@
 ﻿using Microsoft.JSInterop;
+using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
@@ -42,9 +43,17 @@ namespace BlazorAntiForgery
         {
             var cookies = await JSRuntime.InvokeAsync<string>("blazorAntiForgery.getCookies");
 
-            return cookies.Split(';')
-                          .First(x => x.StartsWith(HeaderName + "="))
-                          .Substring(HeaderName.Length + 1);
+            try
+            {
+                return cookies.Split(';')
+                              .First(x => x.Trim().StartsWith(CookieName + "="))
+                              .Trim()
+                              .Substring(CookieName.Length + 1);
+            }
+            catch (Exception)
+            {
+                throw new Exception($"Unable to find Cookie: {CookieName}");
+            }
         }
     }
 }
