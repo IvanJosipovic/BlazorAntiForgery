@@ -14,7 +14,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="headerName">Name of the header that will be added to requests with the Anti Forgery Token</param>
         public static IServiceCollection AddBlazorAntiForgeryServices(this IServiceCollection services, string cookieName = "X-CSRF-TOKEN", string headerName = "X-CSRF-TOKEN")
         {
-            return services.AddSingleton(h => new BlazorAntiForgeryDelegatingHandler(h.GetRequiredService<IJSRuntime>()) { CookieName = cookieName, HeaderName = headerName } );
+            return services.AddSingleton(h => new BlazorAntiForgeryDelegatingHandler(h.GetRequiredService<IJSRuntime>()) { CookieName = cookieName, HeaderName = headerName });
         }
 
         /// <summary>
